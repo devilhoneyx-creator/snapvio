@@ -6,24 +6,26 @@ RUN npm install
 COPY client/ ./
 RUN npm run build
 
-# Build Backend
-FROM node:20
+# Final Stage
+FROM node:20-slim
 WORKDIR /app
-# Debian (node:20) already has build-essentials often, but let's ensure
-RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+# Install runtime dependencies for better-sqlite3
+RUN apt-get update && apt-get install -y python3 make g++ --no-install-recommends && rm -rf /var/lib/apt/lists/*
+
+# Copy backend files
 COPY server/package*.json ./server/
-RUN cd server && npm install
+RUN cd server && npm install --production
+
 COPY server/ ./server/
 COPY --from=frontend-builder /app/client/dist ./client/dist
 
-# Root package.json
+# Root package.json (optional but good for context)
 COPY package*.json ./
-RUN npm install --only=production
 
 ENV NODE_ENV=production
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["npm", "start"]
+# Start server directly to avoid npm overhead
+CMD ["node", "server/index.js"]

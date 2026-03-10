@@ -1,4 +1,4 @@
-console.log('✅ Starting Snapvio Backend...');
+console.log('✅ Snapvio Startup Sequence Initiated...');
 
 require('dotenv').config();
 const express = require('express');
@@ -7,7 +7,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 
-console.log('📦 Dependencies loaded');
+console.log('📦 Core dependencies loaded');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -18,7 +18,6 @@ app.use(helmet({
 }));
 app.use(cors());
 app.use(express.json());
-console.log('🛠️ Middleware configured');
 
 // Rate limiting
 const limiter = rateLimit({
@@ -27,29 +26,47 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-console.log('💾 Initializing database...');
-const db = require('./db');
-console.log('✅ Database initialized');
+console.log('🛠️ Middleware configured');
+
+// Health check before DB
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date(), env: process.env.NODE_ENV });
+});
+
+// Database initialization with error handling
+try {
+    console.log('💾 Initializing database...');
+    const db = require('./db');
+    console.log('✅ Database initialized successfully');
+} catch (error) {
+    console.error('❌ Database initialization FAILED:', error);
+    // In production, we might still want the server to start to respond to health checks
+    // even if the DB is down, but for now we let it log.
+    if (process.env.NODE_ENV === 'production') {
+        process.exit(1);
+    }
+}
 
 const downloadRouter = require('./routes/download');
 
 // Routes
 app.use('/api/download', downloadRouter);
 
-app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', timestamp: new Date() });
-});
-
 // Serve frontend in production
 if (process.env.NODE_ENV === 'production') {
-    console.log('🌐 Serving frontend from dist');
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+    const distPath = path.join(__dirname, '../client/dist');
+    console.log(`🌐 Serving frontend from: ${distPath}`);
+    app.use(express.static(distPath));
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+        res.sendFile(path.join(distPath, 'index.html'));
     });
 }
 
-console.log(`📡 Attempting to listen on 0.0.0.0:${PORT}`);
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 Server fully operational on http://0.0.0.0:${PORT}`);
+console.log(`📡 Preparing to listen on 0.0.0.0:${PORT}`);
+const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 SNAPVIO SERVER LIVE AT http://0.0.0.0:${PORT}`);
+});
+
+server.on('error', (err) => {
+    console.error('❌ Server failed to start:', err);
 });
