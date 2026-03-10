@@ -18,6 +18,8 @@ COPY --from=frontend-builder /app/client/dist ./client/dist
 COPY package*.json ./
 RUN npm install --only=production
 
-EXPOSE 5000
 ENV NODE_ENV=production
+ENV PORT=8080
+EXPOSE 8080
+
 CMD ["npm", "start"]
