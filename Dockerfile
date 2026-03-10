@@ -8,6 +8,9 @@ RUN npm run build
 
 # Build Backend
 FROM node:20-alpine
+# Install build essentials for better-sqlite3
+RUN apk add --no-cache python3 make g++
+
 WORKDIR /app
 COPY server/package*.json ./server/
 RUN cd server && npm install
