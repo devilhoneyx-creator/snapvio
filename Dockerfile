@@ -1,5 +1,5 @@
 # Build Frontend
-FROM node:20-alpine AS frontend-builder
+FROM node:20 AS frontend-builder
 WORKDIR /app/client
 COPY client/package*.json ./
 RUN npm install
@@ -7,9 +7,10 @@ COPY client/ ./
 RUN npm run build
 
 # Build Backend
-FROM node:20-alpine
-# Install build essentials for better-sqlite3
-RUN apk add --no-cache python3 make g++
+FROM node:20
+WORKDIR /app
+# Debian (node:20) already has build-essentials often, but let's ensure
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY server/package*.json ./server/
