@@ -2,9 +2,14 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
-const dbDir = path.join(__dirname, '../database');
+// Use /tmp for SQLite in Cloud Run as the environment is mostly read-only
+const dbDir = process.env.NODE_ENV === 'production' ? '/tmp/snapvio' : path.join(__dirname, '../database');
 if (!fs.existsSync(dbDir)) {
-    fs.mkdirSync(dbDir);
+    try {
+        fs.mkdirSync(dbDir, { recursive: true });
+    } catch (err) {
+        console.error('❌ Failed to create database directory:', err);
+    }
 }
 
 const db = new Database(path.join(dbDir, 'snapvio.db'));

@@ -1,5 +1,13 @@
 console.log('✅ Snapvio Startup Sequence Initiated...');
 
+process.on('uncaughtException', (err) => {
+    console.error('🔥 UNCAUGHT EXCEPTION:', err);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('🔥 UNHANDLED REJECTION at:', promise, 'reason:', reason);
+});
+
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
