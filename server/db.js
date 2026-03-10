@@ -10,36 +10,41 @@ if (!fs.existsSync(dbDir)) {
 const db = new Database(path.join(dbDir, 'snapvio.db'));
 
 // Initialize tables
-db.exec(`
-    CREATE TABLE IF NOT EXISTS downloads (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        url TEXT,
-        platform TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
+try {
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS downloads (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            url TEXT,
+            platform TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
 
-    CREATE TABLE IF NOT EXISTS feedback (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        email TEXT,
-        message TEXT,
-        read INTEGER DEFAULT 0,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
+        CREATE TABLE IF NOT EXISTS feedback (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            email TEXT,
+            message TEXT,
+            read INTEGER DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
 
-    CREATE TABLE IF NOT EXISTS admins (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE,
-        password TEXT
-    );
+        CREATE TABLE IF NOT EXISTS admins (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE,
+            password TEXT
+        );
 
-    CREATE TABLE IF NOT EXISTS flash_offers (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT,
-        content TEXT,
-        link TEXT,
-        expires_at DATETIME
-    );
-`);
+        CREATE TABLE IF NOT EXISTS flash_offers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
+            content TEXT,
+            link TEXT,
+            expires_at DATETIME
+        );
+    `);
+    console.log('✅ SQLite Tables verified/created');
+} catch (err) {
+    console.error('❌ Error creating SQLite tables:', err);
+}
 
 module.exports = db;
