@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Link as LinkIcon, Loader2, AlertCircle, Sparkles, Monitor, Tablet, Smartphone, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Loader2, AlertTriangle, PlayCircle, DownloadCloud } from 'lucide-react';
 
 const Downloader = () => {
   const [url, setUrl] = useState('');
@@ -18,144 +18,139 @@ const Downloader = () => {
     setError('');
 
     try {
-      // Use the actual production API endpoint
       const response = await axios.post('/api/download/info', { url });
       setResult(response.data);
     } catch (err) {
-      setError('Failed to fetch video info. Please verify the URL and try again.');
+      setError('Extraction failed. Please verify the URL syntax and target availability.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 pt-44 pb-32">
+    <div className="w-full max-w-3xl mx-auto px-6 flex flex-col items-center relative z-10">
       <motion.div 
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-center mb-16"
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="w-full flex flex-col items-center mt-12"
       >
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold mb-8"
-        >
-          <Sparkles size={14} />
-          <span>Universal AI Downloader</span>
-        </motion.div>
+        <div className="h-6 px-3 border border-white/10 rounded-full flex items-center gap-2 mb-10 bg-white/[0.02] text-[11px] font-medium text-gray-400 select-none shadow-sm">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          Engine v2.4 Operational
+        </div>
         
-        <h1 className="text-6xl md:text-7xl font-black text-white mb-6 tracking-tight leading-[1.1]">
-          Download Your Favorite <br /> 
-          <span className="text-gradient">Social Content</span>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6 text-center leading-[1.1]">
+          Extract <span className="text-gray-600">content.</span>
         </h1>
-        <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">
-          Instant, high-quality downloads from all major platforms. 
-          No limits, no registration, just pure speed.
+        <p className="text-gray-400 text-lg text-center max-w-lg mb-14 font-light tracking-wide">
+          Paste a link from major social networks to securely retrieve the underlying media streams in high fidelity.
         </p>
-      </motion.div>
 
-      <motion.div 
-        layout
-        className="glass-card p-2 md:p-3 max-w-3xl mx-auto mb-16"
-      >
-        <form onSubmit={handleDownload} className="relative flex flex-col md:flex-row items-center gap-2">
-          <div className="relative flex-1 w-full">
-            <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none text-primary">
-              <LinkIcon size={20} />
-            </div>
+        <form onSubmit={handleDownload} className="w-full relative group">
+          <div className="absolute inset-x-4 -bottom-px h-px bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-700" />
+          
+          <div className="relative flex items-center bg-[#070707] border border-white/[0.12] rounded-[20px] shadow-2xl overflow-hidden transition-all duration-300 focus-within:border-white/30 focus-within:bg-[#0a0a0a]">
             <input
               type="text"
-              className="block w-full pl-16 pr-6 py-6 bg-white/[0.03] border-none rounded-[2rem] text-white placeholder-gray-500 font-medium focus:ring-2 focus:ring-primary/40 transition-all outline-none"
-              placeholder="Paste your link here (e.g. Instagram, TikTok...)"
+              className="w-full bg-transparent px-6 py-6 text-lg text-white placeholder-gray-600 outline-none font-light"
+              placeholder="https://"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
+              autoComplete="off"
+              spellCheck="false"
             />
+            <div className="pr-3 pl-2">
+              <button
+                type="submit"
+                disabled={loading || !url}
+                className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-[14px] hover:bg-gray-200 hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-20 disabled:hover:scale-100 disabled:cursor-not-allowed"
+              >
+                {loading ? <Loader2 className="animate-spin" size={20} strokeWidth={2.5} /> : <ArrowRight size={20} strokeWidth={2.5} />}
+              </button>
+            </div>
           </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full md:w-auto px-10 py-6 bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary text-white rounded-[2rem] font-black transition-all shadow-2xl shadow-primary/30 flex items-center justify-center gap-3 active:scale-95 disabled:opacity-70 group"
-          >
-            {loading ? <Loader2 className="animate-spin" size={22} /> : <Download size={22} className="group-hover:translate-y-0.5 transition-transform" />}
-            {loading ? 'Analyzing...' : 'DOWNLOAD'}
-          </button>
         </form>
       </motion.div>
 
-      <AnimatePresence mode="wait">
-        {error && (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="mt-8 p-6 glass-card border-red-500/20 bg-red-500/5 text-red-400 flex items-center gap-4 max-w-2xl mx-auto"
-          >
-            <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center flex-shrink-0">
-              <AlertCircle size={24} />
-            </div>
-            <p className="font-bold flex-1">{error}</p>
-          </motion.div>
-        )}
+      <div className="w-full min-h-[300px]">
+        <AnimatePresence mode="wait">
+          {error && (
+            <motion.div 
+              key="error"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              className="w-full mt-8 flex items-center gap-3 text-red-400 border border-red-500/20 py-4 px-5 rounded-xl text-sm bg-red-500/5 shadow-inner"
+            >
+              <AlertTriangle size={18} />
+              <span className="font-medium">{error}</span>
+            </motion.div>
+          )}
 
-        {result && (
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="glass-card p-10 mt-12 overflow-hidden relative"
-          >
-            <div className="absolute top-0 right-0 p-8 opacity-10">
-               <Download size={140} />
-            </div>
-            
-            <div className="relative z-10 flex flex-col lg:flex-row gap-12">
-              <div className="w-full lg:w-2/5 group">
-                <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl">
-                  <img src={result.thumbnail} alt="Content Thumbnail" className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-6 left-6 flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
-                     <CheckCircle2 size={16} className="text-green-400" />
-                     <span className="text-white text-sm font-black uppercase tracking-widest">{result.platform}</span>
+          {result && (
+            <motion.div 
+              key="result"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="w-full mt-12 bg-[#050505] border border-white/10 rounded-2xl p-6 shadow-2xl relative overflow-hidden"
+            >
+              {/* Subtle tech background element */}
+              <div className="absolute top-0 right-0 -mr-16 -mt-16 text-white/[0.02] pointer-events-none">
+                 <DownloadCloud size={250} strokeWidth={0.5} />
+              </div>
+
+              <div className="flex flex-col md:flex-row gap-8 relative z-10">
+                <div className="w-full md:w-56 flex-shrink-0">
+                  <div className="aspect-square bg-[#111] rounded-xl border border-white/5 overflow-hidden relative group">
+                    <img src={result.thumbnail} alt="Preview" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                    <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold text-white tracking-widest uppercase border border-white/10 shadow-sm">
+                      {result.platform}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1 flex flex-col justify-center">
+                  <h2 className="text-xl font-medium text-white mb-6 line-clamp-2 leading-snug tracking-tight">
+                    {result.title}
+                  </h2>
+                  
+                  <div className="space-y-2">
+                    {result.medias.map((media, idx) => (
+                      <a
+                        key={idx}
+                        href={media.url}
+                        className="group flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-8 h-8 rounded-md bg-white/5 flex items-center justify-center text-gray-400 group-hover:text-white transition-colors duration-200">
+                            <PlayCircle size={16} />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-sm font-semibold text-gray-200 group-hover:text-white transition-colors duration-200">
+                              {media.quality}
+                            </span>
+                            <span className="text-[10px] text-gray-500 uppercase tracking-widest font-medium">
+                              {media.type}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-xs font-mono text-gray-500">{media.size}</span>
+                          <div className="p-1.5 rounded bg-white/10 text-white group-hover:bg-white group-hover:text-black transition-colors duration-200">
+                             <DownloadCloud size={14} strokeWidth={2.5} />
+                          </div>
+                        </div>
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
-
-              <div className="flex-1 space-y-8">
-                <div>
-                  <h2 className="text-3xl font-black text-white leading-tight mb-4">{result.title}</h2>
-                  <p className="text-gray-400 font-medium">Available in multiple formats. Select your preferred quality below.</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {result.medias.map((media, idx) => (
-                    <motion.a
-                      key={idx}
-                      href={media.url}
-                      whileHover={{ scale: 1.02 }}
-                      className="flex items-center justify-between p-5 bg-white/[0.03] border border-white/5 rounded-2xl hover:bg-white/[0.08] hover:border-primary/30 transition-all group"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                          {media.quality.includes('1080') || media.quality.includes('4K') ? <Monitor size={20} /> : <Smartphone size={20} />}
-                        </div>
-                        <div>
-                          <p className="text-white font-black">{media.quality}</p>
-                          <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">{media.type}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-primary font-black text-sm">{media.size}</p>
-                        <p className="text-[10px] text-gray-400 font-bold tracking-widest uppercase">Size</p>
-                      </div>
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
