@@ -61,7 +61,11 @@ if (process.env.NODE_ENV === 'production') {
     const distPath = path.join(__dirname, '../client/dist');
     console.log(`🌐 Serving frontend from: ${distPath}`);
     app.use(express.static(distPath));
-    app.get('/:any*', (req, res) => {
+    // Use middleware instead of a fragile wildcard route for the catch-all
+    app.use((req, res, next) => {
+        if (req.url.startsWith('/api')) {
+            return next();
+        }
         res.sendFile(path.join(distPath, 'index.html'));
     });
 }
