@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #0f172a;
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.92);
+  background-color: #030712;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,11 +19,79 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #0f172a;
+  background-color: #030712;
+  overflow-x: hidden;
 }
 
 @theme {
   --color-primary: #3b82f6;
-  --color-secondary: #10b981;
-  --color-dark: #1f2937;
+  --color-secondary: #0ea5e9;
+  --color-accent: #8b5cf6;
+  --color-dark: #030712;
+  --color-glass: rgba(15, 23, 42, 0.7);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .glass {
+    @apply backdrop-blur-xl bg-slate-900/70 border border-white/10 shadow-2xl;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-md bg-white/5 border border-white/10 rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.4)];
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-sky-400 to-indigo-400;
+  }
+
+  .bg-mesh {
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(37, 99, 235, 0.15) 0px, transparent 50%);
+  }
+}
+
+/* Animated Blobs */
+.blob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+  filter: blur(80px);
+  border-radius: 50%;
+  z-index: -1;
+  animation: move 25s infinite alternate;
+}
+
+@keyframes move {
+  from { transform: translate(-10%, -10%) scale(1); }
+  to { transform: translate(20%, 20%) scale(1.1); }
+}
+
+.blob-2 {
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
+  animation-delay: -5s;
+  animation-duration: 30s;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
 }
