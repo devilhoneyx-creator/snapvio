@@ -6,26 +6,28 @@ RUN npm install
 COPY client/ ./
 RUN npm run build
 
-# Final Stage
-FROM node:20-slim
+# Final Stage - Using full node:20 for better native module support
+FROM node:20
 WORKDIR /app
 
-# Install runtime dependencies for better-sqlite3
+# Ensure build tools are present for native modules
 RUN apt-get update && apt-get install -y python3 make g++ --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-# Copy backend files
+# Copy backend dependencies
 COPY server/package*.json ./server/
 RUN cd server && npm install --production
 
+# Copy backend source
 COPY server/ ./server/
+# Copy frontend build
 COPY --from=frontend-builder /app/client/dist ./client/dist
 
-# Root package.json (optional but good for context)
+# Root package.json
 COPY package*.json ./
 
 ENV NODE_ENV=production
 ENV PORT=8080
 EXPOSE 8080
 
-# Start server directly to avoid npm overhead
+# Start server
 CMD ["node", "server/index.js"]

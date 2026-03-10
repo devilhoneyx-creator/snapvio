@@ -40,11 +40,7 @@ try {
     console.log('✅ Database initialized successfully');
 } catch (error) {
     console.error('❌ Database initialization FAILED:', error);
-    // In production, we might still want the server to start to respond to health checks
-    // even if the DB is down, but for now we let it log.
-    if (process.env.NODE_ENV === 'production') {
-        process.exit(1);
-    }
+    // Do NOT exit here so we can see the logs in Cloud Run console
 }
 
 const downloadRouter = require('./routes/download');
