@@ -1,108 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  background-color: #000000;
-  color: #f5f5f7;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #09090b; /* zinc-950 */
+  color: #fafafa;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color-scheme: dark;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #000;
+  background-color: #09090b;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden; /* Prevent body scroll, everything happens in the spatial window */
 }
 
 ::selection {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(59, 130, 246, 0.3); /* blue-500/30 */
   color: #fff;
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #09090b;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  background: #27272a; /* zinc-800 */
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: #3f3f46; /* zinc-700 */
 }
 
-/* Spatial Computing Background */
-.spatial-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -2;
-  overflow: hidden;
-  background: #000;
-}
-
-.spatial-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.5;
-  animation: float 30s infinite ease-in-out;
-}
-
-.orb-1 {
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(99,102,241,0.6) 0%, rgba(139,92,246,0) 70%);
-  top: -200px;
-  left: -200px;
-  animation-delay: 0s;
-}
-
-.orb-2 {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(236,72,153,0.5) 0%, rgba(244,63,94,0) 70%);
-  bottom: -100px;
-  right: -100px;
-  animation-delay: -10s;
-}
-
-.orb-3 {
-  width: 700px;
-  height: 700px;
-  background: radial-gradient(circle, rgba(56,189,248,0.5) 0%, rgba(14,165,233,0) 70%);
-  top: 40%;
-  left: 30%;
-  animation-delay: -20s;
-}
-
-@keyframes float {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(50px, -50px) scale(1.1); }
-  66% { transform: translate(-30px, 40px) scale(0.95); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-/* VisionOS Glass Utilities */
+/* Base utility classes for clean UI */
 @layer utilities {
-  .glass-panel {
-    @apply bg-white/[0.08] backdrop-blur-[40px] border border-white/[0.12] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.2)];
+  .subtle-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200;
   }
-
-  .glass-button {
-    @apply bg-white/[0.1] hover:bg-white/[0.15] active:bg-white/[0.05] backdrop-blur-xl border border-white/[0.1] shadow-[0_4px_12px_rgba(0,0,0,0.2)] transition-all duration-300;
-  }
-
-  .glass-input {
-    @apply bg-black/20 backdrop-blur-xl border border-white/[0.1] focus:border-white/[0.3] focus:bg-white/[0.05] focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-300 outline-none;
+  
+  .glass-card {
+    @apply bg-zinc-900/50 backdrop-blur-md border border-zinc-800/50 rounded-2xl;
   }
 }
