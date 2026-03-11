@@ -1,76 +1,72 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Navbar from './components/Navbar';
 import Downloader from './components/Downloader';
 import { motion } from 'framer-motion';
 
 function App() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return null;
-
   return (
-    <div className="min-h-screen flex flex-col font-sans relative overflow-x-hidden">
-      <div className="saas-mesh-bg" />
+    <div className="flex flex-col lg:flex-row min-h-screen font-sans bg-slate-50 text-slate-900 w-full overflow-hidden">
       
-      <Navbar />
-      
-      <main className="flex-1 flex flex-col relative pt-32 pb-24 z-10">
-        <Downloader />
+      {/* Left Panel - Fixed Brand & Copy (Dark Mode) */}
+      <div className="lg:w-5/12 lg:fixed lg:h-screen bg-slate-950 text-white flex flex-col p-8 lg:p-14 relative overflow-hidden shadow-2xl z-20">
         
-        <section className="max-w-6xl mx-auto px-6 mt-32 grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-          {[
-            {
-              title: "Blazing Fast Speeds",
-              desc: "Experience zero buffering. Our global CDN network guarantees the fastest download speeds available anywhere.",
-              icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />,
-              color: "text-pink-500",
-              bg: "bg-pink-50"
-            },
-            {
-              title: "Complete Privacy",
-              desc: "Your data is yours. We process requests in memory, leaving no trace, no logs, and requiring zero sign-ups.",
-              icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />,
-              color: "text-violet-500",
-              bg: "bg-violet-50"
-            },
-            {
-              title: "Pristine Quality",
-              desc: "Extract exactly what you want. Choose between raw 4K resolutions or optimized audio formats instantly.",
-              icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />,
-              color: "text-sky-500",
-              bg: "bg-sky-50"
-            }
-          ].map((feature, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1, duration: 0.5 }}
-              className="saas-card p-8 group hover:-translate-y-2 transition-transform duration-300"
-            >
-              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 ${feature.bg} ${feature.color} group-hover:scale-110 transition-transform duration-300`}>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">{feature.icon}</svg>
-              </div>
-              <h3 className="text-slate-900 font-bold mb-3 text-xl tracking-tight">{feature.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">{feature.desc}</p>
-            </motion.div>
-          ))}
-        </section>
-      </main>
-
-      <footer className="border-t border-slate-200/60 bg-white/50 backdrop-blur-md py-10 mt-auto relative z-10">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
-          <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">
-              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-            </div>
-            <span className="text-slate-900 font-bold tracking-tight">Snapvio</span>
-          </div>
-          <p className="text-sm text-slate-500 font-medium">© {new Date().getFullYear()} Designed carefully by Subhadeep Hazra.</p>
+        {/* Abstract background blur in left panel */}
+        <div className="absolute top-0 right-0 -mr-[30%] -mt-[30%] text-white/[0.03] pointer-events-none z-0 mix-blend-screen opacity-60">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-[800px] h-[800px] blur-3xl">
+            <path fill="#3b82f6" d="M45.7,-76.4C58.9,-69.3,69,-55.4,76.5,-40.8C84,-26.2,88.9,-11,87.6,3.6C86.3,18.1,78.8,32,69.5,44.2C60.2,56.4,49.1,66.8,35.6,73.4C22.1,80,6.2,82.8,-8.7,81.1C-23.6,79.4,-37.5,73.1,-50.2,64C-62.9,54.9,-74.4,43,-81.4,28.6C-88.4,14.3,-90.9,-2.4,-86.3,-17.1C-81.8,-31.8,-70.2,-44.6,-57.1,-52.5C-44,-60.4,-29.4,-63.5,-14.7,-64.5C0,-65.5,15,-64.4,30.3,-60.4C45.6,-56.4,61,-49.5,45.7,-76.4Z" transform="translate(100 100)" />
+          </svg>
         </div>
-      </footer>
+
+        {/* Global Component for Left Panel Header */}
+        <Navbar />
+
+        <div className="flex-1 flex flex-col justify-center relative z-10 mt-16 lg:mt-0">
+          <motion.h1 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="text-5xl lg:text-7xl xl:text-[5rem] font-bold tracking-tighter mb-8 leading-[1.05]"
+          >
+            Extract<br/>Media<br/><span className="text-blue-500">Instantly.</span>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="text-slate-400 text-lg md:text-xl font-light max-w-md leading-relaxed"
+          >
+            A powerful, platform-agnostic tool to securely download high-fidelity video and audio streams from the modern web.
+          </motion.p>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="flex items-center gap-6 mt-16"
+          >
+            <div className="flex -space-x-4">
+              {['FB', 'IG', 'TT', 'YT', 'X'].map((plat, i) => (
+                <div key={i} className={`w-12 h-12 rounded-full border-4 border-slate-950 flex items-center justify-center bg-slate-800 text-[10px] font-black tracking-widest text-slate-400 shadow-xl`}>
+                   {plat}
+                </div>
+              ))}
+            </div>
+            <p className="text-sm font-medium text-slate-500">Supports 40+ Networks</p>
+          </motion.div>
+        </div>
+
+        <div className="mt-16 pt-8 border-t border-slate-800/50 text-xs text-slate-500 font-medium relative z-10 flex justify-between items-center">
+          <span>© {new Date().getFullYear()} Snapvio Core System V4</span>
+          <a href="#" className="hover:text-white transition-colors">Documentation</a>
+        </div>
+      </div>
+
+      {/* Right Panel - Interactive App (Light Mode, Scrollable) */}
+      <div className="lg:w-7/12 lg:ml-[41.666667%] min-h-screen bg-slate-50 flex flex-col relative z-10 w-full">
+        <Downloader />
+      </div>
+
     </div>
   );
 }

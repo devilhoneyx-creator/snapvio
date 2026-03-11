@@ -1,50 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
+import { Sparkles } from 'lucide-react';
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <header className="fixed top-0 inset-x-0 z-50 transition-all duration-300 py-4 px-6">
-      <div 
-        className={`max-w-5xl mx-auto flex items-center justify-between transition-all duration-500 ${
-          scrolled 
-            ? 'bg-white/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-200/50 rounded-full px-6 py-3' 
-            : 'bg-transparent border-transparent px-2 py-2'
-        }`}
-      >
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20">
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-          </div>
-          <span className="text-slate-900 font-extrabold tracking-tight text-xl">Snapvio</span>
+    <div className="flex flex-row md:flex-col lg:flex-row items-start lg:items-center justify-between relative z-10 w-full mb-12 lg:mb-0 gap-6 lg:gap-0">
+      <div className="flex items-center gap-4 group cursor-pointer">
+        <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.4)] group-hover:scale-105 transition-transform duration-300">
+           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
         </div>
-        
-        <nav className="hidden md:flex items-center gap-8">
-          {['Features', 'Integrations', 'Pricing'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors duration-200">
-              {item}
-            </a>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-4">
-          <a href="#login" className="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors hidden sm:block duration-200">Log in</a>
-          <button className="h-10 px-6 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-colors duration-200 shadow-md">
-            Go to Admin
-          </button>
-        </div>
+        <span className="text-2xl font-black tracking-tight text-white group-hover:text-blue-400 transition-colors duration-300">Snapvio</span>
       </div>
-    </header>
+      
+      <button className="px-6 py-2.5 rounded-full border border-slate-700/50 bg-slate-800/50 hover:bg-white hover:text-black hover:border-white text-sm font-semibold text-slate-300 transition-all focus:ring-4 focus:ring-white/20 flex items-center gap-2">
+        <Sparkles size={16} />
+        Admin Dashboard
+      </button>
+    </div>
   );
-};
+}
 
 export default Navbar;
