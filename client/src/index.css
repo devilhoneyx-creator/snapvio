@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  background-color: #09090b; /* zinc-950 */
-  color: #fafafa;
+  background-color: #0f1115; /* Deep utilitarian dark slate */
+  color: #f8fafc; /* slate-50 */
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color-scheme: dark;
 }
@@ -10,13 +10,13 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #09090b;
+  background-color: #0f1115;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: rgba(59, 130, 246, 0.3); /* blue-500/30 */
+  background: rgba(16, 185, 129, 0.3); /* green-500/30 */
   color: #fff;
 }
 
@@ -25,25 +25,29 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: #0f1115;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a; /* zinc-800 */
+  background: #334155; /* slate-700 */
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46; /* zinc-700 */
+  background: #475569; /* slate-600 */
 }
 
-/* Base utility classes for clean UI */
+/* Utilities for V9 Dark Utilitarian UI */
 @layer utilities {
-  .subtle-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200;
+  .hero-gradient {
+    background: radial-gradient(ellipse at top, #1e293b 0%, #0f1115 70%);
   }
-  
-  .glass-card {
-    @apply bg-zinc-900/50 backdrop-blur-md border border-zinc-800/50 rounded-2xl;
+
+  .input-shadow {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  }
+
+  .btn-green {
+    @apply bg-[#10b981] hover:bg-[#059669] active:bg-[#047857] text-white font-bold transition-colors shadow-lg hover:shadow-xl;
   }
 }
