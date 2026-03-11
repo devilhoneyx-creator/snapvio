@@ -1,28 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="fixed top-0 inset-x-0 z-50 border-b border-white/[0.06] bg-[#000000]/60 backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto px-6 h-[60px] flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 rounded flex items-center justify-center border border-white/20 bg-white/5 shadow-inner">
-            <div className="w-2 h-2 bg-white rounded-sm drop-shadow-[0_0_4px_rgba(255,255,255,0.8)]" />
+    <header className="fixed top-0 inset-x-0 z-50 transition-all duration-300 py-4 px-6">
+      <div 
+        className={`max-w-5xl mx-auto flex items-center justify-between transition-all duration-500 ${
+          scrolled 
+            ? 'bg-white/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-200/50 rounded-full px-6 py-3' 
+            : 'bg-transparent border-transparent px-2 py-2'
+        }`}
+      >
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
           </div>
-          <span className="text-white font-semibold tracking-tight text-sm">Snapvio</span>
+          <span className="text-slate-900 font-extrabold tracking-tight text-xl">Snapvio</span>
         </div>
         
         <nav className="hidden md:flex items-center gap-8">
-          {['Integrations', 'Changelog', 'Pricing', 'API'].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="text-xs font-medium text-gray-400 hover:text-white transition-colors duration-200">
+          {['Features', 'Integrations', 'Pricing'].map((item) => (
+            <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors duration-200">
               {item}
             </a>
           ))}
         </nav>
 
-        <div className="flex items-center gap-5">
-          <a href="#login" className="text-xs font-medium text-gray-400 hover:text-white transition-colors hidden sm:block duration-200">Log in</a>
-          <button className="h-7 px-4 bg-white text-black text-xs font-semibold rounded-md hover:bg-gray-200 transition-colors duration-200 tracking-tight">
-            Admin
+        <div className="flex items-center gap-4">
+          <a href="#login" className="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors hidden sm:block duration-200">Log in</a>
+          <button className="h-10 px-6 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-colors duration-200 shadow-md">
+            Go to Admin
           </button>
         </div>
       </div>
