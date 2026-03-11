@@ -82,7 +82,7 @@ function App() {
 
       <footer className="w-full border-t border-slate-800 bg-[#0f1115] py-8 text-center text-slate-500 text-sm mt-auto">
         <p>
-          &copy; {new Date().getFullYear()} Snapvio. Designed by <a href="https://www.facebook.com/loveuhoneyminati/" target="_blank" rel="noreferrer" className="text-[#10b981] hover:underline font-semibold font-sans tracking-wide">Subhadeep Hazra</a>.
+          &copy; {new Date().getFullYear()} Snapvio. Designed and developed by <a href="https://www.facebook.com/loveuhoneyminati/" target="_blank" rel="noreferrer" className="text-[#10b981] hover:underline font-semibold font-sans tracking-wide">Subhadeep Hazra</a>.
         </p>
       </footer>
     </div>
