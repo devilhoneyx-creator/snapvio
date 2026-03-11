@@ -1,72 +1,92 @@
 import React from 'react';
-import Navbar from './components/Navbar';
 import Downloader from './components/Downloader';
-import { motion } from 'framer-motion';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen font-sans bg-slate-50 text-slate-900 w-full overflow-hidden">
+    <div className="min-h-screen flex flex-col font-sans relative">
       
-      {/* Left Panel - Fixed Brand & Copy (Dark Mode) */}
-      <div className="lg:w-5/12 lg:fixed lg:h-screen bg-slate-950 text-white flex flex-col p-8 lg:p-14 relative overflow-hidden shadow-2xl z-20">
-        
-        {/* Abstract background blur in left panel */}
-        <div className="absolute top-0 right-0 -mr-[30%] -mt-[30%] text-white/[0.03] pointer-events-none z-0 mix-blend-screen opacity-60">
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-[800px] h-[800px] blur-3xl">
-            <path fill="#3b82f6" d="M45.7,-76.4C58.9,-69.3,69,-55.4,76.5,-40.8C84,-26.2,88.9,-11,87.6,3.6C86.3,18.1,78.8,32,69.5,44.2C60.2,56.4,49.1,66.8,35.6,73.4C22.1,80,6.2,82.8,-8.7,81.1C-23.6,79.4,-37.5,73.1,-50.2,64C-62.9,54.9,-74.4,43,-81.4,28.6C-88.4,14.3,-90.9,-2.4,-86.3,-17.1C-81.8,-31.8,-70.2,-44.6,-57.1,-52.5C-44,-60.4,-29.4,-63.5,-14.7,-64.5C0,-65.5,15,-64.4,30.3,-60.4C45.6,-56.4,61,-49.5,45.7,-76.4Z" transform="translate(100 100)" />
-          </svg>
+      {/* Top Marquee */}
+      <div className="marquee-container bg-[#ff00ff] text-white">
+        <div className="marquee-content pr-12">
+          ⚡ SNAPVIO V6 ⚡ INSTANT MEDIA EXTRACTION ⚡ ZERO LOGS ⚡ MAXIMUM BITRATE ⚡ NO ACCOUNTS REQUIRED ⚡ SNAPVIO V6 ⚡ INSTANT MEDIA EXTRACTION ⚡
         </div>
+        <div className="marquee-content pr-12 aria-hidden">
+          ⚡ SNAPVIO V6 ⚡ INSTANT MEDIA EXTRACTION ⚡ ZERO LOGS ⚡ MAXIMUM BITRATE ⚡ NO ACCOUNTS REQUIRED ⚡ SNAPVIO V6 ⚡ INSTANT MEDIA EXTRACTION ⚡
+        </div>
+      </div>
 
-        {/* Global Component for Left Panel Header */}
-        <Navbar />
+      <Navbar />
 
-        <div className="flex-1 flex flex-col justify-center relative z-10 mt-16 lg:mt-0">
-          <motion.h1 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-5xl lg:text-7xl xl:text-[5rem] font-bold tracking-tighter mb-8 leading-[1.05]"
-          >
-            Extract<br/>Media<br/><span className="text-blue-500">Instantly.</span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-slate-400 text-lg md:text-xl font-light max-w-md leading-relaxed"
-          >
-            A powerful, platform-agnostic tool to securely download high-fidelity video and audio streams from the modern web.
-          </motion.p>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="flex items-center gap-6 mt-16"
-          >
-            <div className="flex -space-x-4">
-              {['FB', 'IG', 'TT', 'YT', 'X'].map((plat, i) => (
-                <div key={i} className={`w-12 h-12 rounded-full border-4 border-slate-950 flex items-center justify-center bg-slate-800 text-[10px] font-black tracking-widest text-slate-400 shadow-xl`}>
-                   {plat}
-                </div>
-              ))}
+      <main className="flex-1 max-w-[1400px] mx-auto w-full p-6 md:p-12 relative">
+         
+         {/* Hero Title - Overlapping elements */}
+         <div className="relative mb-16 md:mb-32 mt-8">
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-black uppercase leading-[0.8] tracking-tighter mix-blend-difference text-white z-10 relative pointer-events-none">
+              RIP IT<br/>
+              <span className="text-[#00ffcc] brutal-stroke">OFF THE</span><br/>
+              INTERNET.
+            </h1>
+            
+            {/* Decorative brutalist shapes */}
+            <div className="absolute top-10 right-0 md:right-20 w-64 h-64 bg-[#ffff00] border-4 border-black shadow-[12px_12px_0_rgba(0,0,0,1)] rounded-full -z-10 animate-[bounce_10s_infinite]" />
+            <div className="absolute -bottom-10 md:-bottom-20 left-10 md:left-1/3 w-48 h-48 bg-[#ff00ff] border-4 border-black shadow-[12px_12px_0_rgba(0,0,0,1)] -z-10 rotate-12" />
+            <div className="absolute top-0 left-1/2 w-80 h-20 bg-[#00ffcc] border-4 border-black shadow-[12px_12px_0_rgba(0,0,0,1)] -z-10 -rotate-6" />
+         </div>
+
+         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            
+            {/* Left Col: Main Interactive Tool */}
+            <div className="lg:col-span-8 space-y-10">
+               <div className="brutal-card p-6 md:p-12 bg-white">
+                  <h2 className="text-3xl font-black uppercase mb-6 border-b-4 border-black pb-4 inline-block">Extract Media [v6.0.4]</h2>
+                  <Downloader />
+               </div>
+
+               {/* Ad Block Main */}
+               <div className="ad-block w-full h-[250px]">
+                  <span className="text-4xl text-gray-400 mb-2">🚧</span>
+                  ADVERTISEMENT SPACE
+                  <span className="text-xs mt-2 text-gray-500 font-normal normal-case">Responsive Display Unit</span>
+               </div>
             </div>
-            <p className="text-sm font-medium text-slate-500">Supports 40+ Networks</p>
-          </motion.div>
+
+            {/* Right Col: Info / Ads / Chaos */}
+            <div className="lg:col-span-4 space-y-10">
+               
+               <div className="brutal-card bg-[#ffff00] p-8 -rotate-2">
+                 <h3 className="text-2xl font-black uppercase border-b-4 border-black pb-2 mb-4">Supported Targets</h3>
+                 <ul className="space-y-3 font-bold text-lg uppercase">
+                   <li className="flex justify-between border-b-2 border-black/20 pb-1"><span>Instagram</span> <span>[ACTIVE]</span></li>
+                   <li className="flex justify-between border-b-2 border-black/20 pb-1"><span>TikTok</span> <span>[ACTIVE]</span></li>
+                   <li className="flex justify-between border-b-2 border-black/20 pb-1"><span>Twitter/X</span> <span>[ACTIVE]</span></li>
+                   <li className="flex justify-between border-b-2 border-black/20 pb-1"><span>Facebook</span> <span>[ACTIVE]</span></li>
+                   <li className="flex justify-between border-b-2 border-black/20 pb-1"><span>YouTube</span> <span>[ACTIVE]</span></li>
+                 </ul>
+               </div>
+
+               {/* Ad Block Sidebar */}
+               <div className="ad-block w-full h-[600px] border-l-8 border-l-[#ff00ff]">
+                  <span className="text-4xl text-gray-400 mb-2">💰</span>
+                  VERT AD SPACE
+                  <span className="text-xs mt-2 text-gray-500 font-normal normal-case">300x600 Half Page</span>
+               </div>
+            </div>
+
+         </div>
+
+      </main>
+
+      <footer className="border-t-8 border-black bg-white mt-20">
+        <div className="marquee-container bg-[#00ffcc]">
+           <div className="marquee-content pr-12" style={{ animationDirection: 'reverse' }}>
+             ++ SNAPVIO INC ++ ALL RIGHTS RESERVED {new Date().getFullYear()} ++ SNAPVIO INC ++ ALL RIGHTS RESERVED {new Date().getFullYear()} ++
+           </div>
+           <div className="marquee-content pr-12 aria-hidden" style={{ animationDirection: 'reverse' }}>
+             ++ SNAPVIO INC ++ ALL RIGHTS RESERVED {new Date().getFullYear()} ++ SNAPVIO INC ++ ALL RIGHTS RESERVED {new Date().getFullYear()} ++
+           </div>
         </div>
-
-        <div className="mt-16 pt-8 border-t border-slate-800/50 text-xs text-slate-500 font-medium relative z-10 flex justify-between items-center">
-          <span>© {new Date().getFullYear()} Snapvio Core System V4</span>
-          <a href="#" className="hover:text-white transition-colors">Documentation</a>
-        </div>
-      </div>
-
-      {/* Right Panel - Interactive App (Light Mode, Scrollable) */}
-      <div className="lg:w-7/12 lg:ml-[41.666667%] min-h-screen bg-slate-50 flex flex-col relative z-10 w-full">
-        <Downloader />
-      </div>
-
+      </footer>
     </div>
   );
 }
