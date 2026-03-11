@@ -1,81 +1,108 @@
 @import "tailwindcss";
 
 :root {
-  background-color: #fafafa;
-  color: #000000;
-  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-  color-scheme: light;
+  background-color: #000000;
+  color: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #f0f0f0;
-  background-image: radial-gradient(#000 1px, transparent 1px);
-  background-size: 20px 20px;
+  background-color: #000;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* Prevent body scroll, everything happens in the spatial window */
 }
 
 ::selection {
-  background: #000;
+  background: rgba(255, 255, 255, 0.3);
   color: #fff;
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
-  border-left: 2px solid #000;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0f0f0;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Spatial Computing Background */
+.spatial-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  overflow: hidden;
   background: #000;
-  border: 2px solid #f0f0f0;
 }
 
-/* Neo-Brutalism Utilities */
+.spatial-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.5;
+  animation: float 30s infinite ease-in-out;
+}
+
+.orb-1 {
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(99,102,241,0.6) 0%, rgba(139,92,246,0) 70%);
+  top: -200px;
+  left: -200px;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(236,72,153,0.5) 0%, rgba(244,63,94,0) 70%);
+  bottom: -100px;
+  right: -100px;
+  animation-delay: -10s;
+}
+
+.orb-3 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(56,189,248,0.5) 0%, rgba(14,165,233,0) 70%);
+  top: 40%;
+  left: 30%;
+  animation-delay: -20s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, -50px) scale(1.1); }
+  66% { transform: translate(-30px, 40px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* VisionOS Glass Utilities */
 @layer utilities {
-  .brutal-card {
-    @apply bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all;
-  }
-  
-  .brutal-card:hover {
-    @apply shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] translate-x-1 translate-y-1;
-  }
-  
-  .brutal-card-color {
-    @apply bg-[#ff3366] text-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all;
+  .glass-panel {
+    @apply bg-white/[0.08] backdrop-blur-[40px] border border-white/[0.12] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.2)];
   }
 
-  .brutal-card-color:hover {
-    @apply shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] translate-x-1 translate-y-1;
+  .glass-button {
+    @apply bg-white/[0.1] hover:bg-white/[0.15] active:bg-white/[0.05] backdrop-blur-xl border border-white/[0.1] shadow-[0_4px_12px_rgba(0,0,0,0.2)] transition-all duration-300;
   }
 
-  .brutal-input {
-    @apply bg-white border-4 border-black focus:outline-none focus:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all;
+  .glass-input {
+    @apply bg-black/20 backdrop-blur-xl border border-white/[0.1] focus:border-white/[0.3] focus:bg-white/[0.05] focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all duration-300 outline-none;
   }
-
-  .brutal-button {
-    @apply bg-[#00ffcc] text-black border-4 border-black font-black uppercase text-xl px-8 py-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)] active:translate-x-2 active:translate-y-2 transition-all;
-  }
-
-  .marquee-container {
-    @apply overflow-hidden whitespace-nowrap border-y-4 border-black bg-[#ffff00] py-2 flex items-center;
-  }
-  
-  .marquee-content {
-    @apply inline-block animate-[marquee_20s_linear_infinite] font-black uppercase text-2xl tracking-widest;
-  }
-
-  .ad-block {
-    @apply border-4 border-dashed border-black bg-[#e0e0e0] flex flex-col items-center justify-center p-8 text-black font-mono text-sm font-bold uppercase;
-  }
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }

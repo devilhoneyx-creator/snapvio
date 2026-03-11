@@ -2,21 +2,36 @@ import React from 'react';
 
 const Navbar = () => {
   return (
-    <nav className="border-b-4 border-black bg-white p-4 flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-0 z-50 shadow-[0_8px_0_rgba(0,0,0,1)]">
+    <div className="w-full h-20 md:h-24 px-6 md:px-10 flex items-center justify-between border-b border-white/[0.05] relative z-20 shrink-0">
       
-      <div className="text-4xl font-black uppercase tracking-tighter bg-black text-white px-4 py-1 -skew-x-12">
-        SNAPVIO.
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-2xl glass-button flex items-center justify-center relative overflow-hidden group hover:scale-105 transition-transform duration-300">
+           <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+           <svg className="w-5 h-5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+        </div>
+        <span className="text-lg font-medium text-white tracking-tight">Snapvio</span>
       </div>
-      
-      <div className="flex gap-2 sm:gap-6 flex-wrap justify-center">
-        <a href="#" className="font-black text-xl uppercase hover:bg-[#ffff00] px-2 border-2 border-transparent hover:border-black transition-colors">Engine</a>
-        <a href="#" className="font-black text-xl uppercase hover:bg-[#00ffcc] px-2 border-2 border-transparent hover:border-black transition-colors">API</a>
-        <a href="#" className="font-black text-xl uppercase hover:bg-[#ff00ff] hover:text-white px-2 border-2 border-transparent hover:border-black transition-colors">Docs</a>
-      </div>
-      
-      {/* Intentionally removed Login/Admin as requested. Just raw links. */}
-      
-    </nav>
+
+      <nav className="hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-black/20 border border-white/5 backdrop-blur-2xl">
+        {['Download', 'History', 'Settings'].map((item, idx) => (
+          <button 
+            key={item} 
+            className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              idx === 0 
+                ? 'bg-white/10 text-white shadow-[0_0_15px_rgba(255,255,255,0.05)]' 
+                : 'text-white/50 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            {item}
+          </button>
+        ))}
+      </nav>
+
+      <button className="h-10 px-5 rounded-full bg-white text-black font-semibold text-sm hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+        Dashboard
+      </button>
+
+    </div>
   );
 };
 

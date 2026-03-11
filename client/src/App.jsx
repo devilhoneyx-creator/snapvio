@@ -1,92 +1,67 @@
 import React from 'react';
-import Downloader from './components/Downloader';
 import Navbar from './components/Navbar';
+import Downloader from './components/Downloader';
+import { motion } from 'framer-motion';
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col font-sans relative">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 md:p-8 font-sans selection:bg-white/20 relative">
       
-      {/* Top Marquee */}
-      <div className="marquee-container bg-[#ff00ff] text-white">
-        <div className="marquee-content pr-12">
-          ⚡ SNAPVIO V6 ⚡ INSTANT MEDIA EXTRACTION ⚡ ZERO LOGS ⚡ MAXIMUM BITRATE ⚡ NO ACCOUNTS REQUIRED ⚡ SNAPVIO V6 ⚡ INSTANT MEDIA EXTRACTION ⚡
-        </div>
-        <div className="marquee-content pr-12 aria-hidden">
-          ⚡ SNAPVIO V6 ⚡ INSTANT MEDIA EXTRACTION ⚡ ZERO LOGS ⚡ MAXIMUM BITRATE ⚡ NO ACCOUNTS REQUIRED ⚡ SNAPVIO V6 ⚡ INSTANT MEDIA EXTRACTION ⚡
-        </div>
+      {/* Immersive Spatial Background Elements */}
+      <div className="spatial-bg">
+        <div className="spatial-orb orb-1" />
+        <div className="spatial-orb orb-2" />
+        <div className="spatial-orb orb-3" />
       </div>
 
-      <Navbar />
+      {/* Main Spatial Computing 'App Window' Container */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="glass-panel w-full max-w-[1200px] h-[90vh] md:h-[85vh] rounded-[2.5rem] md:rounded-[3.5rem] flex flex-col relative z-10 overflow-hidden ring-1 ring-white/10"
+      >
+        
+        {/* Decorative inner glow for glass effect depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none rounded-[3.5rem]" />
+        
+        <Navbar />
 
-      <main className="flex-1 max-w-[1400px] mx-auto w-full p-6 md:p-12 relative">
-         
-         {/* Hero Title - Overlapping elements */}
-         <div className="relative mb-16 md:mb-32 mt-8">
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-black uppercase leading-[0.8] tracking-tighter mix-blend-difference text-white z-10 relative pointer-events-none">
-              RIP IT<br/>
-              <span className="text-[#00ffcc] brutal-stroke">OFF THE</span><br/>
-              INTERNET.
-            </h1>
+        <div className="flex-1 overflow-y-auto overflow-x-hidden relative flex flex-col">
+          <div className="px-6 md:px-16 pt-12 md:pt-20 pb-16 flex-1 flex flex-col items-center">
             
-            {/* Decorative brutalist shapes */}
-            <div className="absolute top-10 right-0 md:right-20 w-64 h-64 bg-[#ffff00] border-4 border-black shadow-[12px_12px_0_rgba(0,0,0,1)] rounded-full -z-10 animate-[bounce_10s_infinite]" />
-            <div className="absolute -bottom-10 md:-bottom-20 left-10 md:left-1/3 w-48 h-48 bg-[#ff00ff] border-4 border-black shadow-[12px_12px_0_rgba(0,0,0,1)] -z-10 rotate-12" />
-            <div className="absolute top-0 left-1/2 w-80 h-20 bg-[#00ffcc] border-4 border-black shadow-[12px_12px_0_rgba(0,0,0,1)] -z-10 -rotate-6" />
-         </div>
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="text-center mb-12 max-w-2xl"
+            >
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] font-medium tracking-widest uppercase mb-8 text-white/70">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                VisionOS Environment
+              </div>
+              
+              <h1 className="text-4xl md:text-6xl font-medium tracking-tight text-white mb-6 leading-tight">
+                Media Extraction.<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-pink-300">Reimagined.</span>
+              </h1>
+              <p className="text-lg text-white/50 font-light leading-relaxed max-w-xl mx-auto">
+                A seamless, immersive experience for securing high-fidelity media directly to your device without the noise.
+              </p>
+            </motion.div>
 
-         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            
-            {/* Left Col: Main Interactive Tool */}
-            <div className="lg:col-span-8 space-y-10">
-               <div className="brutal-card p-6 md:p-12 bg-white">
-                  <h2 className="text-3xl font-black uppercase mb-6 border-b-4 border-black pb-4 inline-block">Extract Media [v6.0.4]</h2>
-                  <Downloader />
-               </div>
+            <Downloader />
 
-               {/* Ad Block Main */}
-               <div className="ad-block w-full h-[250px]">
-                  <span className="text-4xl text-gray-400 mb-2">🚧</span>
-                  ADVERTISEMENT SPACE
-                  <span className="text-xs mt-2 text-gray-500 font-normal normal-case">Responsive Display Unit</span>
-               </div>
-            </div>
-
-            {/* Right Col: Info / Ads / Chaos */}
-            <div className="lg:col-span-4 space-y-10">
-               
-               <div className="brutal-card bg-[#ffff00] p-8 -rotate-2">
-                 <h3 className="text-2xl font-black uppercase border-b-4 border-black pb-2 mb-4">Supported Targets</h3>
-                 <ul className="space-y-3 font-bold text-lg uppercase">
-                   <li className="flex justify-between border-b-2 border-black/20 pb-1"><span>Instagram</span> <span>[ACTIVE]</span></li>
-                   <li className="flex justify-between border-b-2 border-black/20 pb-1"><span>TikTok</span> <span>[ACTIVE]</span></li>
-                   <li className="flex justify-between border-b-2 border-black/20 pb-1"><span>Twitter/X</span> <span>[ACTIVE]</span></li>
-                   <li className="flex justify-between border-b-2 border-black/20 pb-1"><span>Facebook</span> <span>[ACTIVE]</span></li>
-                   <li className="flex justify-between border-b-2 border-black/20 pb-1"><span>YouTube</span> <span>[ACTIVE]</span></li>
-                 </ul>
-               </div>
-
-               {/* Ad Block Sidebar */}
-               <div className="ad-block w-full h-[600px] border-l-8 border-l-[#ff00ff]">
-                  <span className="text-4xl text-gray-400 mb-2">💰</span>
-                  VERT AD SPACE
-                  <span className="text-xs mt-2 text-gray-500 font-normal normal-case">300x600 Half Page</span>
-               </div>
-            </div>
-
-         </div>
-
-      </main>
-
-      <footer className="border-t-8 border-black bg-white mt-20">
-        <div className="marquee-container bg-[#00ffcc]">
-           <div className="marquee-content pr-12" style={{ animationDirection: 'reverse' }}>
-             ++ SNAPVIO INC ++ ALL RIGHTS RESERVED {new Date().getFullYear()} ++ SNAPVIO INC ++ ALL RIGHTS RESERVED {new Date().getFullYear()} ++
-           </div>
-           <div className="marquee-content pr-12 aria-hidden" style={{ animationDirection: 'reverse' }}>
-             ++ SNAPVIO INC ++ ALL RIGHTS RESERVED {new Date().getFullYear()} ++ SNAPVIO INC ++ ALL RIGHTS RESERVED {new Date().getFullYear()} ++
-           </div>
+          </div>
+          
+          <div className="mt-auto py-6 border-t border-white/5 w-full flex justify-center backdrop-blur-md bg-black/20 z-20">
+            <span className="text-[10px] font-medium text-white/30 tracking-widest uppercase">
+              Designed for Spatial Web · Snapvio 2026
+            </span>
+          </div>
         </div>
-      </footer>
+
+      </motion.div>
     </div>
   );
 }
